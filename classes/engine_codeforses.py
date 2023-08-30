@@ -53,8 +53,8 @@ class EngineCF:
         data = get_correct_data(result_data_from_problems, result_data_from_problemstatistics)
         return data
 
-e = EngineCF()
-print(e.get_result_data())
+# e = EngineCF()
+# print(e.get_result_data())
 
 
 
