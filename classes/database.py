@@ -1,8 +1,4 @@
-import os
-
 import psycopg2
-
-from classes.engine_codeforses import EngineCF
 
 
 class DBManager:
@@ -29,6 +25,7 @@ class DBManager:
                                     rating INT,
                                     count_solutions INT);
                                 """)
+
     def insert_to_tasks(self, data: list):
         """Метод внесения данных в таблицу employers"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
@@ -48,13 +45,3 @@ class DBManager:
             with conn.cursor() as cur:
                 cur.execute(f"""INSERT into tasks (number, name, theme, rating, count_solutions)
                             VALUES(%s, %s, %s, %s, %s)""", data)
-
-params =  {'user': os.getenv('USER'),
-           'password': os.getenv('PASSWORD'),
-           'host': os.getenv('HOST'),
-            'port': os.getenv('POSRT')}
-db = DBManager('parser_db', params)
-db.create_database()
-e = EngineCF()
-res = e.get_result_data()
-db.insert_to_tasks(res)

@@ -3,20 +3,8 @@ import requests
 from utils import get_correct_data, get_random_theme
 
 
-#
-# url = 'https://codeforces.com/api/problemset.problems/?lang=ru'
-#
-# response = requests.get(url)
-#
-# for i, item in enumerate(response.json()['result']['problems']):
-#     print(i, item)
-# for i, item in enumerate(response.json()['result']):
-#     print(i, item)
-
 class EngineCF:
-
     URL = 'https://codeforces.com/api/problemset.problems'
-
 
     def get_request_for_problems(self) -> dict:
         response = requests.get(self.URL)
@@ -29,7 +17,6 @@ class EngineCF:
             number = f"{item.get('contestId')}{item.get('index')}"
             lst.append(number)
         return lst
-
 
     def get_request_for_problemstatistic(self) -> dict:
         response = requests.get(self.URL)
@@ -61,10 +48,3 @@ class EngineCF:
             result_data_from_problemstatistics.append(self.get_content_from_problemstatistic(item))
         data = get_correct_data(result_data_from_problems, result_data_from_problemstatistics)
         return list(map(lambda x: tuple(x), data))
-
-# e = EngineCF()
-# print(e.get_result_data())
-
-
-
-
