@@ -4,7 +4,7 @@ from utils import get_correct_data, get_random_theme
 
 
 #
-# url = 'https://codeforces.com/api/problemset.problems'
+# url = 'https://codeforces.com/api/problemset.problems/?lang=ru'
 #
 # response = requests.get(url)
 #
@@ -21,6 +21,15 @@ class EngineCF:
     def get_request_for_problems(self) -> dict:
         response = requests.get(self.URL)
         return response.json()['result']['problems']
+
+    def get_check_new_task(self):
+        lst = []
+        response = self.get_request_for_problems()
+        for item in response:
+            number = f"{item.get('contestId')}{item.get('index')}"
+            lst.append(number)
+        return lst
+
 
     def get_request_for_problemstatistic(self) -> dict:
         response = requests.get(self.URL)
@@ -51,7 +60,7 @@ class EngineCF:
         for item in self.get_request_for_problemstatistic():
             result_data_from_problemstatistics.append(self.get_content_from_problemstatistic(item))
         data = get_correct_data(result_data_from_problems, result_data_from_problemstatistics)
-        return data
+        return list(map(lambda x: tuple(x), data))
 
 # e = EngineCF()
 # print(e.get_result_data())
