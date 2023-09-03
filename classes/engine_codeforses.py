@@ -34,6 +34,8 @@ class EngineCF:
         number = f"{content.get('contestId')}{content.get('index')}"
         name = content.get('name')
         rating = content.get('rating')
+        if rating is None:
+            rating = 0
         theme = content.get('tags')
         if len(theme) > 1:
             theme = [get_random_theme(theme)]
@@ -43,7 +45,8 @@ class EngineCF:
         return [number, name, theme[0], rating]
 
     def get_content_from_problemstatistic(self, content: dict) -> list:
-        """Возвращает данные в списке по одной задаче  по ключу problemStatistics"""
+        """Возвращает данные в списке по одной задаче
+                по ключу problemStatistics"""
 
         count_solutions = content.get('solvedCount')
         number = f"{content.get('contestId')}{content.get('index')}"
