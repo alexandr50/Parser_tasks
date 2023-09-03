@@ -32,6 +32,7 @@ class DBManager:
 
     def insert_to_tasks(self, data: list):
         """Метод внесения данных в таблицу tasks"""
+
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.executemany(f"""INSERT INTO tasks (number, name, theme, rating, count_solutions)
@@ -39,6 +40,7 @@ class DBManager:
 
     def get_all_numbers_tasks(self):
         """Метод возвращающий все номера задач"""
+
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"""SELECT number from tasks""")
@@ -47,6 +49,7 @@ class DBManager:
 
     def single_insert_to_task(self, data: tuple):
         """Метод внесения данных в таблицу"""
+
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"""INSERT into tasks (number, name, theme, rating, count_solutions)
