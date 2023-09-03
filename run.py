@@ -9,6 +9,7 @@ params = {'user': os.getenv('USER'),
           'host': os.getenv('HOST'),
           'port': os.getenv('PORT')}
 
+
 def run():
     db = DBManager('parser_db', params)
     db.create_database()
@@ -17,5 +18,7 @@ def run():
     db.insert_to_tasks(result)
 
     os.system(f'python {os.getcwd()}/bot/telegram_bot.py')
-# if __name__ == '__main__':
-#     run()
+
+
+if __name__ == '__main__':
+    run()

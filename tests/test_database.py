@@ -8,12 +8,11 @@ params = {'user': os.getenv('USER'),
           'host': os.getenv('HOST'),
           'port': os.getenv('PORT')}
 
+
 class DBManagerTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.db = DBManager('parser_db', params)
-        data = ('1A', 'Theatre Square', 'math', 1000, 218637)
-
 
     def test_get_all_numbers_tasks(self):
         res = self.db.get_all_numbers_tasks()
@@ -26,4 +25,3 @@ class DBManagerTest(unittest.TestCase):
     def test_get_all_rating(self):
         res = self.db.get_all_rating()
         self.assertEqual(res[-1][0], 1400)
-

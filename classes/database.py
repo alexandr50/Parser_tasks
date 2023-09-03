@@ -1,8 +1,4 @@
-import os
-
 import psycopg2
-
-from classes.engine_codeforses import EngineCF
 
 
 class DBManager:
@@ -22,7 +18,7 @@ class DBManager:
 
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.execute(f"""CREATE TABLE IF NOT EXISTS tasks (
+                cur.execute("""CREATE TABLE IF NOT EXISTS tasks (
                                     number VARCHAR(10) UNIQUE NOT NULL,
                                     name VARCHAR(100),
                                     theme VARCHAR(100),
@@ -35,15 +31,16 @@ class DBManager:
 
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.executemany(f"""INSERT INTO tasks (number, name, theme, rating, count_solutions)
-                                VALUES(%s, %s, %s, %s, %s)""", data)
+                cur.executemany("""INSERT INTO tasks
+                (number, name, theme, rating, count_solutions)
+                VALUES(%s, %s, %s, %s, %s)""", data)
 
     def get_all_numbers_tasks(self):
         """Метод возвращающий все номера задач"""
 
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.execute(f"""SELECT number from tasks""")
+                cur.execute("""SELECT number from tasks""")
                 result = cur.fetchall()
         return list(map(lambda x: x[0], result))
 
@@ -52,14 +49,15 @@ class DBManager:
 
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.execute(f"""INSERT into tasks (number, name, theme, rating, count_solutions)
-                            VALUES(%s, %s, %s, %s, %s)""", data)
+                cur.execute("""INSERT into tasks
+                (number, name, theme, rating, count_solutions)
+                VALUES(%s, %s, %s, %s, %s)""", data)
 
     def get_all_theme(self):
         """Метод возвращающий уникальные темы задач"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.execute(f"""SELECT DISTINCT(theme) from tasks""")
+                cur.execute("""SELECT DISTINCT(theme) from tasks""")
                 result = cur.fetchall()
         return result
 
@@ -67,7 +65,7 @@ class DBManager:
         """Метод возвращающий уникальные рэйтинги задач"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.execute(f"""SELECT DISTINCT(rating) from tasks""")
+                cur.execute("""SELECT DISTINCT(rating) from tasks""")
                 result = cur.fetchall()
         return result
 
@@ -75,7 +73,8 @@ class DBManager:
         """Метод возвращающий все задачи с фильтацией по теме"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.execute(f"""SELECT * from tasks WHERE theme like '%{theme}%' LIMIT 10""")
+                cur.execute(f"""SELECT * from tasks
+                WHERE theme like '%{theme}%' LIMIT 10""")
                 result = cur.fetchall()
         return result
 
@@ -83,8 +82,7 @@ class DBManager:
         """Метод возвращающий все задачи с фильтацией по рейтингу"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.execute(f"""SELECT * from tasks WHERE rating = {rating} LIMIT 10""")
+                cur.execute(f"""SELECT * from tasks
+                WHERE rating = {rating} LIMIT 10""")
                 result = cur.fetchall()
         return result
-
-

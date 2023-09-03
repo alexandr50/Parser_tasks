@@ -34,7 +34,7 @@ class EngineCF:
         number = f"{content.get('contestId')}{content.get('index')}"
         name = content.get('name')
         rating = content.get('rating')
-        if rating == None:
+        if rating is None:
             rating = 0
         theme = content.get('tags')
         if len(theme) > 1:
@@ -45,7 +45,8 @@ class EngineCF:
         return [number, name, theme[0], rating]
 
     def get_content_from_problemstatistic(self, content: dict) -> list:
-        """Возвращает данные в списке по одной задаче  по ключу problemStatistics"""
+        """Возвращает данные в списке по одной задаче
+                по ключу problemStatistics"""
 
         count_solutions = content.get('solvedCount')
         number = f"{content.get('contestId')}{content.get('index')}"
@@ -61,6 +62,3 @@ class EngineCF:
             result_data_from_problemstatistics.append(self.get_content_from_problemstatistic(item))
         data = get_correct_data(result_data_from_problems, result_data_from_problemstatistics)
         return list(map(lambda x: tuple(x), data))
-
-e = EngineCF()
-print(e.get_request_for_problems())

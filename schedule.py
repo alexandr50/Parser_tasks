@@ -3,10 +3,12 @@ import pathlib
 
 from crontab import CronTab
 
-dir_path = pathlib.Path.cwd()
-task_path = pathlib.Path(dir_path, 'schedule.py')
 from classes.database import DBManager
 from classes.engine_codeforses import EngineCF
+
+dir_path = pathlib.Path.cwd()
+task_path = pathlib.Path(dir_path, 'schedule.py')
+
 
 params = {'user': os.getenv('USER'),
           'password': os.getenv('PASSWORD'),

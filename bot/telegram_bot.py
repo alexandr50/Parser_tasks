@@ -49,7 +49,8 @@ def print_query_for_theme(message):
     result_data = db.get_data_for_telegramm_theme(theme)
     for item in result_data:
         bot.send_message(message.chat.id,
-                         f'Number: {item[0]}, Name: {item[1]}, Theme: {item[2]}, Rating: {item[3]}, Count_solutions: {item[4]}')
+                         f'''Number: {item[0]}, Name: {item[1]}, Theme: {item[2]},
+                           Rating: {item[3]}, Count_solutions: {item[4]}''')
         time.sleep(0.5)
 
 
@@ -75,7 +76,8 @@ def print_query_for_rating(message):
     result_data = db.get_data_for_telegramm_rating(rating)
     for item in result_data:
         bot.send_message(message.chat.id,
-                         f'Number: {item[0]}, Name: {item[1]}, Theme: {item[2]}, Rating: {item[3]}, Count_solutions: {item[4]}')
+                         f'Number: {item[0]}, Name: {item[1]}, Theme: {item[2]}, '
+                         f'Rating: {item[3]}, Count_solutions: {item[4]}')
         time.sleep(0.5)
 
 

@@ -8,6 +8,6 @@ def get_correct_data(content_without_solutions: list, content_with_solutions: li
                 item_withouts.append(_[1])
     return content_without_solutions
 
+
 def get_random_theme(lst: list):
     return random.choice(lst)
-
