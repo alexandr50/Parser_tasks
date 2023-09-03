@@ -1,4 +1,8 @@
+import os
+
 import psycopg2
+
+from classes.engine_codeforses import EngineCF
 
 
 class DBManager:
@@ -45,3 +49,44 @@ class DBManager:
             with conn.cursor() as cur:
                 cur.execute(f"""INSERT into tasks (number, name, theme, rating, count_solutions)
                             VALUES(%s, %s, %s, %s, %s)""", data)
+
+    def get_all_theme(self):
+        with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"""SELECT DISTINCT(theme) from tasks""")
+                result = cur.fetchall()
+        return result
+
+    def get_all_rating(self):
+        with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"""SELECT DISTINCT(rating) from tasks""")
+                result = cur.fetchall()
+        return result
+
+    def get_data_for_telegramm_theme(self, theme):
+        with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"""SELECT * from tasks WHERE theme like '%{theme}%' LIMIT 10""")
+                result = cur.fetchall()
+        return result
+
+    def get_data_for_telegramm_rating(self, rating):
+        with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"""SELECT * from tasks WHERE rating = {rating} LIMIT 10""")
+                result = cur.fetchall()
+        return result
+
+#
+# params = {'user': os.getenv('USER'),
+#           'password': os.getenv('PASSWORD'),
+#           'host': os.getenv('HOST'),
+#           'port': os.getenv('POSRT')}
+# db = DBManager('parser_db', params)
+# db.create_database()
+# e = EngineCF()
+# result = e.get_result_data()
+# db.insert_to_tasks(result)
+
+

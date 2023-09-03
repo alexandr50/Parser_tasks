@@ -34,6 +34,8 @@ class EngineCF:
         number = f"{content.get('contestId')}{content.get('index')}"
         name = content.get('name')
         rating = content.get('rating')
+        if rating == None:
+            rating = 0
         theme = content.get('tags')
         if len(theme) > 1:
             theme = [get_random_theme(theme)]
