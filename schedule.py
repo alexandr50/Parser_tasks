@@ -11,7 +11,7 @@ from classes.engine_codeforses import EngineCF
 params = {'user': os.getenv('USER'),
           'password': os.getenv('PASSWORD'),
           'host': os.getenv('HOST'),
-          'port': os.getenv('POSRT')}
+          'port': os.getenv('PORT')}
 
 
 def check_new_task(name_bd, params):
