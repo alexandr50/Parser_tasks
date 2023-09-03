@@ -31,13 +31,14 @@ class DBManager:
                                 """)
 
     def insert_to_tasks(self, data: list):
-        """Метод внесения данных в таблицу employers"""
+        """Метод внесения данных в таблицу tasks"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.executemany(f"""INSERT INTO tasks (number, name, theme, rating, count_solutions)
                                 VALUES(%s, %s, %s, %s, %s)""", data)
 
     def get_all_numbers_tasks(self):
+        """Метод возвращающий все номера задач"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"""SELECT number from tasks""")
@@ -45,12 +46,14 @@ class DBManager:
         return list(map(lambda x: x[0], result))
 
     def single_insert_to_task(self, data: tuple):
+        """Метод внесения данных в таблицу"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"""INSERT into tasks (number, name, theme, rating, count_solutions)
                             VALUES(%s, %s, %s, %s, %s)""", data)
 
     def get_all_theme(self):
+        """Метод возвращающий уникальные темы задач"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"""SELECT DISTINCT(theme) from tasks""")
@@ -58,6 +61,7 @@ class DBManager:
         return result
 
     def get_all_rating(self):
+        """Метод возвращающий уникальные рэйтинги задач"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"""SELECT DISTINCT(rating) from tasks""")
@@ -65,6 +69,7 @@ class DBManager:
         return result
 
     def get_data_for_telegramm_theme(self, theme):
+        """Метод возвращающий все задачи с фильтацией по теме"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"""SELECT * from tasks WHERE theme like '%{theme}%' LIMIT 10""")
@@ -72,21 +77,11 @@ class DBManager:
         return result
 
     def get_data_for_telegramm_rating(self, rating):
+        """Метод возвращающий все задачи с фильтацией по рейтингу"""
         with psycopg2.connect(dbname=self.name_db, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"""SELECT * from tasks WHERE rating = {rating} LIMIT 10""")
                 result = cur.fetchall()
         return result
-
-#
-# params = {'user': os.getenv('USER'),
-#           'password': os.getenv('PASSWORD'),
-#           'host': os.getenv('HOST'),
-#           'port': os.getenv('POSRT')}
-# db = DBManager('parser_db', params)
-# db.create_database()
-# e = EngineCF()
-# result = e.get_result_data()
-# db.insert_to_tasks(result)
 
 

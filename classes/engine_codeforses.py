@@ -61,3 +61,6 @@ class EngineCF:
             result_data_from_problemstatistics.append(self.get_content_from_problemstatistic(item))
         data = get_correct_data(result_data_from_problems, result_data_from_problemstatistics)
         return list(map(lambda x: tuple(x), data))
+
+e = EngineCF()
+print(e.get_request_for_problems())

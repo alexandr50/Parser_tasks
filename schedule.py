@@ -26,6 +26,6 @@ def check_new_task(name_bd, params):
 
 my_cron = CronTab(user=True)
 job = my_cron.new(command=f'python {task_path}')
-job.hour.every(1)
+job.minute.every(1)
 
 my_cron.write()

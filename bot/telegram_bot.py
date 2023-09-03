@@ -18,16 +18,19 @@ bot = telebot.TeleBot(os.getenv('bot_token'))
 db = DBManager('parser_db', params=params)
 
 
-@bot.message_handler(commands=['button'])
-def button_message(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item = types.KeyboardButton("Кнопка")
-    markup.add(item)
-    bot.send_message(message.chat.id, 'Выберите что вам надо', reply_markup=markup)
+# @bot.message_handler(commands=['button'])
+# def button_message(message):
+#
+#     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+#     item = types.KeyboardButton("Кнопка")
+#     markup.add(item)
+#     bot.send_message(message.chat.id, 'Выберите что вам надо', reply_markup=markup)
 
 
 @bot.message_handler(commands=['theme'])
 def start_bot_theme(message):
+    """Вывод меню для фильрации по теме"""
+
     lst = db.get_all_theme()
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     for item in lst:
@@ -40,6 +43,8 @@ def start_bot_theme(message):
 
 @bot.message_handler(chat_types=['text'])
 def print_query_for_theme(message):
+    """Вывод данных согласнр выбранному пункту"""
+
     theme = message.text
     result_data = db.get_data_for_telegramm_theme(theme)
     for item in result_data:
@@ -50,6 +55,8 @@ def print_query_for_theme(message):
 
 @bot.message_handler(commands=['rating'])
 def start_bot_rating(message):
+    """Вывод меню для фильрации по рейтингу"""
+
     lst = db.get_all_rating()
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     for item in lst:
@@ -62,6 +69,8 @@ def start_bot_rating(message):
 
 @bot.message_handler(chat_types=['text'])
 def print_query_for_rating(message):
+    """Вывод данных согласнр выбранному пункту"""
+
     rating = int(message.text)
     result_data = db.get_data_for_telegramm_rating(rating)
     for item in result_data:
